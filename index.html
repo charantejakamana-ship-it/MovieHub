@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CineVerse — Movie Information Hub</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Top Navigation -->
+  <header class="navbar">
+    <div class="container nav-content">
+      <a href="#top" class="brand" id="brandHome">
+        <span class="brand-icon">&#9654;</span>
+        <span class="brand-text">Cine<span>Verse</span></span>
+      </a>
+
+      <div class="search-wrapper">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search movies, genres, directors..."
+          autocomplete="off"
+          aria-label="Search movies"
+        />
+        <ul id="searchResults" class="search-dropdown hidden"></ul>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#story-section">Story</a>
+        <a href="#cast-section">Cast</a>
+        <a href="#trailer-section">Trailer</a>
+        <a href="#related-section">Related</a>
+        <button id="watchlistBtn" class="btn-watchlist" type="button">
+          Watchlist <span id="watchlistCount" class="badge">0</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Movie Hero -->
+  <main id="top">
+    <section class="hero" id="heroSection">
+      <div class="hero-backdrop" id="heroBackdrop"></div>
+      <div class="container hero-grid">
+        <div class="poster-card">
+          <img id="moviePoster" src="" alt="Movie Poster" />
+          <span class="cert-badge" id="movieCert">UA</span>
+        </div>
+
+        <div class="hero-details">
+          <div class="meta-top">
+            <span id="movieYear" class="pill"></span>
+            <span id="movieDuration" class="pill"></span>
+            <span id="movieLanguage" class="pill"></span>
+          </div>
+
+          <h1 id="movieTitle" class="movie-title"></h1>
+          <p id="movieTagline" class="movie-tagline"></p>
+
+          <div id="movieGenres" class="genre-list"></div>
+
+          <!-- Ratings Bar -->
+          <div class="ratings-bar">
+            <div class="rating-box">
+              <span class="rating-label">IMDb Rating</span>
+              <div class="rating-value">
+                <span class="star">&#9733;</span>
+                <strong id="imdbRating"></strong><span class="out-of">/10</span>
+              </div>
+              <small id="imdbVotes"></small>
+            </div>
+
+            <div class="rating-box">
+              <span class="rating-label">Critics Score</span>
+              <div class="rating-value">
+                <strong id="criticsScore"></strong>
+              </div>
+              <small>Verified Reviews</small>
+            </div>
+
+            <div class="rating-box user-rating-box">
+              <span class="rating-label">Your Rating</span>
+              <div class="star-picker" id="starPicker" role="radiogroup" aria-label="Rate this movie">
+                <button type="button" data-star="1" aria-label="1 star">&#9733;</button>
+                <button type="button" data-star="2" aria-label="2 stars">&#9733;</button>
+                <button type="button" data-star="3" aria-label="3 stars">&#9733;</button>
+                <button type="button" data-star="4" aria-label="4 stars">&#9733;</button>
+                <button type="button" data-star="5" aria-label="5 stars">&#9733;</button>
+              </div>
+              <small id="userRatingText">Click to rate</small>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="hero-actions">
+            <a href="#trailer-section" class="btn btn-primary" id="watchTrailerBtn">
+              &#9654; Watch Trailer
+            </a>
+            <button type="button" class="btn btn-secondary" id="toggleWatchlistBtn">
+              + Add to Watchlist
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Story & Key Info Section -->
+    <section class="section" id="story-section">
+      <div class="container story-grid">
+        <div class="story-main">
+          <h2 class="section-title">Storyline</h2>
+          <p id="movieStory" class="story-text"></p>
+
+          <div class="highlights-box">
+            <h3>Key Highlights</h3>
+            <ul id="movieHighlights"></ul>
+          </div>
+        </div>
+
+        <aside class="info-sidebar">
+          <h3>Movie Details</h3>
+          <dl class="facts-list" id="movieFacts"></dl>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Cast Section -->
+    <section class="section section-alt" id="cast-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Top Cast</h2>
+          <span class="section-subtitle">Starring performances</span>
+        </div>
+        <div class="cast-grid" id="castGrid"></div>
+      </div>
+    </section>
+
+    <!-- Trailer Section -->
+    <section class="section" id="trailer-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Official Trailer</h2>
+          <span id="trailerCaption" class="section-subtitle"></span>
+        </div>
+
+        <div class="trailer-wrapper">
+          <iframe
+            id="trailerFrame"
+            title="Movie Trailer"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <p class="trailer-note">
+          Trouble loading the embedded video?
+          <a id="trailerExternalLink" href="#" target="_blank" rel="noopener noreferrer">
+            Watch directly on YouTube &rarr;
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <!-- User Reviews Section -->
+    <section class="section section-alt" id="reviews-section">
+      <div class="container reviews-layout">
+        <div>
+          <h2 class="section-title">Audience Reviews</h2>
+          <div id="reviewsList" class="reviews-list"></div>
+        </div>
+
+        <form id="reviewForm" class="review-form">
+          <h3>Write a Review</h3>
+          <label for="reviewerName">Your Name</label>
+          <input type="text" id="reviewerName" placeholder="e.g., Aarav" required />
+
+          <label for="reviewText">Your Thoughts</label>
+          <textarea id="reviewText" rows="4" placeholder="What did you like about the movie?" required></textarea>
+
+          <button type="submit" class="btn btn-primary">Post Review</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Related Movies Section -->
+    <section class="section" id="related-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Related Movies</h2>
+          <span class="section-subtitle">Click any movie to explore its details</span>
+        </div>
+        <div class="movies-grid" id="relatedMoviesGrid"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Watchlist Modal -->
+  <div id="watchlistModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="watchlistModalTitle">
+    <div class="modal-backdrop" id="closeModalBackdrop"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="watchlistModalTitle">Your Watchlist</h3>
+        <button type="button" id="closeWatchlistBtn" class="close-btn" aria-label="Close">&times;</button>
+      </div>
+      <div id="watchlistItems" class="watchlist-items"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 CineVerse Movie Information Website. Built with HTML, CSS &amp; JavaScript.</p>
+      <a href="#top">Back to top &uarr;</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
